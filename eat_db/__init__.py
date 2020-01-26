@@ -1,1 +1,7 @@
-__version__ = '0.1.0'
+"""
+eat-db
+~~~~~~
+Tell me what I can eat.
+"""
+
+__version__ = "0.0.1"

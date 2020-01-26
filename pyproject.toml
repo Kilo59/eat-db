@@ -1,16 +1,18 @@
 [tool.poetry]
 name = "eat-db"
-version = "0.1.0"
+version = "0.0.1"
 description = ""
 authors = ["Gabriel <gabriel59kg@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
 blue-chip = "*"
+fastapi = "^0.47.1"
 
 [tool.poetry.dev-dependencies]
 black = "19.10b0"
 pytest = "^5.2"
+uvicorn = "*"
 
 
 [build-system]
