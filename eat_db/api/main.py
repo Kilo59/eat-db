@@ -28,5 +28,7 @@ async def root():
 
 
 @app.get("/bin/{name}")
-async def check_bin(name: Bins):
-    return db.get(name, [])
+async def check_bin(name: Bins = Bins.fridge, skip: int = 0, limit: int = 10):
+    """Check bins for contents."""
+    bin_contents = db.get(name, [])[skip:limit]
+    return bin_contents
