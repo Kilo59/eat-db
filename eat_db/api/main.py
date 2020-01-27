@@ -66,3 +66,13 @@ async def check_bin(name: BinTypes = BinTypes.fridge, skip: int = 0, limit: int 
     """Check bins for contents."""
     bin_contents = get_db().get(name, [])[skip:limit]
     return bin_contents
+
+
+@app.post("/bin/")
+async def create_bin(bin_obj: Bin):
+    LOGGER.debug(bin_obj)
+    if not bin_obj.name:
+        LOGGER.warning(f"name not provided: {bin_obj.name}")
+        raise fastapi.HTTPException(400)
+    get_db()[bin_obj.name] = []
+    return bin_obj
