@@ -61,6 +61,12 @@ async def root():
     return {"message": {k: len(v) for (k, v) in get_db().items()}}
 
 
+@app.get("/status/liveness")
+async def liveness():
+    """Check if the service is running"""
+    return {"message": "ok"}
+
+
 @app.get("/bin/{name}")
 async def check_bin(name: BinTypes = BinTypes.fridge, skip: int = 0, limit: int = 10):
     """Check bins for contents."""

@@ -10,6 +10,7 @@ blue-chip = "*"
 email-validator = "*"
 fastapi = "^0.47.1"
 isort = "^4.3.21"
+requests = "^2.22.0"
 
 [tool.poetry.dev-dependencies]
 black = "19.10b0"
