@@ -1,7 +1,7 @@
 """
-eat_db.api.app.py
+eat_db.api.main.py
 ~~~~~~~~~~~~~~~~~
-fastapi app module.
+fastapi APP module.
 """
 import enum
 import logging
@@ -53,28 +53,28 @@ class Bin(pydantic.BaseModel):
             raise ValueError(f"name must be unique, {v} already exists.")
 
 
-app = fastapi.FastAPI()
+APP = fastapi.FastAPI()
 
 
-@app.get("/")
+@APP.get("/")
 async def root():
     return {"message": {k: len(v) for (k, v) in get_db().items()}}
 
 
-@app.get("/status/liveness")
+@APP.get("/status/liveness")
 async def liveness():
     """Check if the service is running"""
     return {"message": "ok"}
 
 
-@app.get("/bin/{name}")
+@APP.get("/bin/{name}")
 async def check_bin(name: BinTypes = BinTypes.fridge, skip: int = 0, limit: int = 10):
     """Check bins for contents."""
     bin_contents = get_db().get(name, [])[skip:limit]
     return bin_contents
 
 
-@app.post("/bin/")
+@APP.post("/bin/")
 async def create_bin(bin_obj: Bin):
     LOGGER.debug(bin_obj)
     if not bin_obj.name:
