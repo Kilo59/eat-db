@@ -5,6 +5,7 @@ fastapi APP module.
 """
 # stdlib
 import logging
+from typing import List
 from pprint import pformat as pf
 
 import fastapi
@@ -15,6 +16,7 @@ from eat_db.models import Food, Labels
 
 logging.basicConfig(level=logging.DEBUG)
 LOGGER = logging.getLogger("api")
+LOGGER.setLevel(logging.DEBUG)
 
 
 eat_db.db.load_dummy_data(Food)
@@ -34,10 +36,17 @@ async def liveness():
 
 
 @APP.get("/fridge")
-async def check_fridge(skip: int = 0, limit: int = 10):
+async def check_fridge(
+    label: Labels = None, skip: int = 0, limit: int = 10, details: bool = False
+):
     """Check the fridge for contents."""
-    fridge_contents = DB.get("fridge", [])[skip:limit]
-    return [food.name for food in fridge_contents]
+    if not label:
+        fridge_contents = DB.get("fridge", [])[skip:limit]
+    else:
+        fridge_contents = eat_db.db.get_by_label("fridge", label)[skip:limit]
+    if details:
+        return [item.dict(exclude={}) for item in fridge_contents]
+    return [item.name for item in fridge_contents]
 
 
 @APP.put("/fridge")

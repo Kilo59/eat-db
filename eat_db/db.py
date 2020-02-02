@@ -7,6 +7,7 @@ from typing import List, Union
 import logging
 
 LOGGER = logging.getLogger(name="db")
+LOGGER.setLevel(logging.DEBUG)
 
 DEMO_NOSQL_DB = {
     "fridge": [],
