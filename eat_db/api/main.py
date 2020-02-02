@@ -16,6 +16,8 @@ from eat_db.models import Food, Tags
 LOGGER = logging.getLogger("api")
 LOGGER.setLevel(logging.DEBUG)
 
+
+eat_db.db.load_dummy_data(Food)
 DB = eat_db.db.get_db()
 APP = fastapi.FastAPI()
 
@@ -34,8 +36,8 @@ async def liveness():
 @APP.get("/fridge")
 async def check_fridge(skip: int = 0, limit: int = 10):
     """Check the fridge for contents."""
-    bin_contents = DB.get("fridge", [])[skip:limit]
-    return bin_contents
+    fridge_contents = DB.get("fridge", [])[skip:limit]
+    return [food.name for food in fridge_contents]
 
 
 @APP.post("/fridge")
@@ -46,6 +48,7 @@ async def add_food(
     LOGGER.debug(tag)
     food.tags.add(tag.value)
     LOGGER.info(f"food:\n{pf(food.dict(exclude_none=True))}")
+    DB["fridge"].append(food)
     return {
         "message": f"{food.name} added",
         "expires": food.expire_date,
