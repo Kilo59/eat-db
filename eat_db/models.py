@@ -10,7 +10,7 @@ from typing import List, Set
 import pydantic
 
 DB = {}
-EXPIRE_DEFAULT = dt.timedelta(weeks=8)
+EXPIRE_DEFAULT = dt.timedelta(weeks=4)
 
 
 class Tags(str, enum.Enum):
@@ -21,13 +21,14 @@ class Tags(str, enum.Enum):
 
 class Food(pydantic.BaseModel):
     name: str
-    storage_date: dt.datetime = dt.datetime.now()
+    storage_date: dt.date = dt.date.today()
     # TODO: use Tags to determine expire date if none provided.
-    expire_date: dt.datetime = storage_date + EXPIRE_DEFAULT
+    expire_date: dt.date = storage_date + EXPIRE_DEFAULT
     tags: Set[Tags] = set()
 
     class Config:
         use_enum_values = True
+        anystr_strip_whitespace = True
 
 
 class BinTypes(str, enum.Enum):
