@@ -1,3 +1,11 @@
+[tool.isort]
+line_length = 100
+known_first_party = "eat_db"
+import_heading_firstparty = "project"
+atomic = "True"
+sections = "FUTURE,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
+verbose = "False"
+
 [tool.poetry]
 name = "eat-db"
 version = "0.0.1"
@@ -15,6 +23,7 @@ requests = "^2.22.0"
 [tool.poetry.dev-dependencies]
 black = "19.10b0"
 pytest = "^5.2"
+requests = "*"
 uvicorn = "*"
 
 
