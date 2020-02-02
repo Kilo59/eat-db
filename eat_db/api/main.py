@@ -11,7 +11,7 @@ import fastapi
 
 # project
 import eat_db.db
-from eat_db.models import Food, Tags
+from eat_db.models import Food, Labels
 
 logging.basicConfig(level=logging.DEBUG)
 LOGGER = logging.getLogger("api")
@@ -42,18 +42,21 @@ async def check_fridge(skip: int = 0, limit: int = 10):
 
 @APP.put("/fridge")
 async def add_food(
-    food: Food, tag: Tags = Tags.fridge,
+    food: Food, label: Labels = Labels.food,
 ):
     """
     Put food in the fridge.
-    TODO: finalize how tags are going to be used.
+    TODO: finalize how labels are going to be used.
     """
-    LOGGER.debug(f"adding tag: {tag}")
-    food.tags.add(tag.value)
+    labels = {Labels.food.value, label.value}
+    LOGGER.debug(f"adding labels: {labels}")
+    food.labels.update(labels)
     LOGGER.debug(f"food:\n{pf(food.dict(exclude_none=True))}")
+
+    LOGGER.debug("updating DB")
     DB["fridge"].append(food)
     return {
         "message": f"{food.name} added",
         "expires": food.expire_date,
-        "tags": food.tags,
+        "labels": food.labels,
     }

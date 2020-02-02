@@ -13,18 +13,18 @@ DB = {}
 EXPIRE_DEFAULT = dt.timedelta(weeks=4)
 
 
-class Tags(str, enum.Enum):
+class Labels(str, enum.Enum):
     leftovers = "leftovers"
-    fridge = "fridge"
-    freezer = "freezer"
+    food = "food"
+    drink = "drink"
 
 
 class Food(pydantic.BaseModel):
     name: str
     storage_date: dt.date = dt.date.today()
-    # TODO: use Tags to determine expire date if none provided.
+    # TODO: use Labels to determine expire date if none provided.
     expire_date: dt.date = storage_date + EXPIRE_DEFAULT
-    tags: Set[Tags] = set()
+    labels: Set[Labels] = set()
 
     class Config:
         use_enum_values = True

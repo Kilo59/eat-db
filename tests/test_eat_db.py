@@ -12,7 +12,7 @@ from starlette.testclient import TestClient
 
 # project
 import eat_db.api.main
-from eat_db import Food, Tags, db, __version__
+from eat_db import Food, Labels, db, __version__
 
 TEST_LOGGER = logging.getLogger("tests")
 TEST_LOGGER.setLevel(logging.DEBUG)
@@ -49,13 +49,14 @@ def test_liveness(api_client):
     "json_test_params,",
     [
         pytest.param(
-            {"tags": {"leftovers"}},
+            {"labels": {"leftovers"}},
             marks=pytest.mark.xfail(
                 reason="Incoming request must be valid json. Python sets are not.",
                 strict=True,
             ),
         ),
-        {"tags": ["leftovers"]},
+        {"labels": ["leftovers"]},
+        {"labels": ["leftovers", "drink"]},
     ],
 )
 def test_add_food(request, api_client, test_db, json_test_params):
