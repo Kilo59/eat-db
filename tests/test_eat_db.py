@@ -35,6 +35,28 @@ def test_liveness(api_client):
     assert response.status_code == 200
 
 
+@pytest.mark.parametrize(
+    "json_test_params,",
+    [
+        {"tags": ["leftovers"]},
+        pytest.param(
+            {"tags": {"leftovers"}},
+            marks=pytest.mark.xfail(
+                reason="Incoming request must be valid json. Python sets are not.",
+                strict=True,
+            ),
+        ),
+    ],
+)
+def test_add_food(request, api_client, json_test_params):
+    json_body = {"name": request.node.name}
+    json_body.update(json_test_params)
+    print(f"\trequest json:\n{pf(json_body)}")
+    response = api_client.post("/fridge", json=json_body)
+    print(f"{response}\n{response.content}")
+    assert response.status_code == 200
+
+
 @pytest.mark.parametrize("model,as_dict", [(Food, {"name": "hot dog"})])
 def test_models(model, as_dict):
     print(f"input dict:\n{pf(as_dict, depth=1, width=40)}")

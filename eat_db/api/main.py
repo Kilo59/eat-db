@@ -5,12 +5,13 @@ fastapi APP module.
 """
 # stdlib
 import logging
+from pprint import pformat as pf
 
 import fastapi
 
 # project
 import eat_db.db
-from eat_db.models import Tags
+from eat_db.models import Food, Tags
 
 LOGGER = logging.getLogger("api")
 LOGGER.setLevel(logging.DEBUG)
@@ -38,6 +39,15 @@ async def check_fridge(skip: int = 0, limit: int = 10):
 
 
 @APP.post("/fridge")
-async def add_food(tag: Tags = None):
+async def add_food(
+    food: Food, tag: Tags = Tags.fridge,
+):
+    LOGGER.debug(food)
     LOGGER.debug(tag)
-    return {"message": "added"}
+    food.tags.add(tag.value)
+    LOGGER.info(f"food:\n{pf(food.dict(exclude_none=True))}")
+    return {
+        "message": f"{food.name} added",
+        "expires": food.expire_date,
+        "tags": food.tags,
+    }

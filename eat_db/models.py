@@ -2,10 +2,10 @@
 eat_db.models.py
 ~~~~~~~~~~~~~~~~
 """
-import datetime as dt
 # stdlib
+import datetime as dt
 import enum
-from typing import List
+from typing import List, Set
 
 import pydantic
 
@@ -15,6 +15,8 @@ EXPIRE_DEFAULT = dt.timedelta(weeks=8)
 
 class Tags(str, enum.Enum):
     leftovers = "leftovers"
+    fridge = "fridge"
+    freezer = "freezer"
 
 
 class Food(pydantic.BaseModel):
@@ -22,7 +24,10 @@ class Food(pydantic.BaseModel):
     storage_date: dt.datetime = dt.datetime.now()
     # TODO: use Tags to determine expire date if none provided.
     expire_date: dt.datetime = storage_date + EXPIRE_DEFAULT
-    tags: List[Tags] = []
+    tags: Set[Tags] = set()
+
+    class Config:
+        use_enum_values = True
 
 
 class BinTypes(str, enum.Enum):
