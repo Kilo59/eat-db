@@ -48,7 +48,6 @@ def test_liveness(api_client):
 @pytest.mark.parametrize(
     "json_test_params,",
     [
-        {"tags": ["leftovers"]},
         pytest.param(
             {"tags": {"leftovers"}},
             marks=pytest.mark.xfail(
@@ -56,6 +55,7 @@ def test_liveness(api_client):
                 strict=True,
             ),
         ),
+        {"tags": ["leftovers"]},
     ],
 )
 def test_add_food(request, api_client, test_db, json_test_params):
@@ -64,7 +64,7 @@ def test_add_food(request, api_client, test_db, json_test_params):
     json_body.update(json_test_params)
     print(f"\trequest json:\n{pf(json_body)}")
 
-    response = api_client.post("/fridge", json=json_body)
+    response = api_client.put("/fridge", json=json_body)
     print(f"{response}\n{response.content}")
     assert response.status_code == 200
     assert len(test_db["fridge"]) == fridge_inital + 1
