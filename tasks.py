@@ -27,3 +27,19 @@ def sort(ctx, diff=False):
     args.append(".")
     cmd = " ".join(args)
     ctx.run(cmd)
+
+
+@invoke.task
+def build_image(ctx):
+    """Build the docker image."""
+    args = ["docker", "build", ".", "-t", "kilo59/eat-db"]
+    cmd = " ".join(args)
+    ctx.run(cmd)
+
+
+@invoke.task
+def container_run(ctx):
+    """Run the latest docker image as a container."""
+    args = ["docker", "run", "-p80:80", "kilo59/eat-db"]
+    cmd = " ".join(args)
+    ctx.run(cmd)
