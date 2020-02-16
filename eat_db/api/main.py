@@ -5,8 +5,8 @@ fastapi APP module.
 """
 # stdlib
 import logging
-from typing import List
 from pprint import pformat as pf
+from typing import List
 
 import fastapi
 

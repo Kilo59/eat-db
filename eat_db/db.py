@@ -2,9 +2,8 @@
 eat_db.api.db.py
 ~~~~~~~~~~~~~~~~
 """
-# stdlib
-from typing import List, Union
 import logging
+from typing import Union
 
 LOGGER = logging.getLogger(name="db")
 LOGGER.setLevel(logging.DEBUG)

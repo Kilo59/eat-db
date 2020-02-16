@@ -12,7 +12,7 @@ from starlette.testclient import TestClient
 
 # project
 import eat_db.api.main
-from eat_db import Food, Labels, db, __version__
+from eat_db import Food, Labels, __version__, db
 
 TEST_LOGGER = logging.getLogger("tests")
 TEST_LOGGER.setLevel(logging.DEBUG)
