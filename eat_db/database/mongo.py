@@ -25,7 +25,7 @@ def get_mongo_client(
 
 
 def close_connection():
-    client = MONGO_GLOBALS.get("client")
+    client = MONGO_GLOBALS.pop("client", None)
     if not client:
         LOGGER.debug("no active `client` global, no mongo connection to close")
         return False
