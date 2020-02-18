@@ -11,7 +11,7 @@ from typing import List
 import fastapi
 
 # project
-import eat_db.db
+import eat_db.database
 from eat_db.models import Food, Labels
 
 logging.basicConfig(level=logging.DEBUG)
@@ -19,8 +19,8 @@ LOGGER = logging.getLogger("api")
 LOGGER.setLevel(logging.DEBUG)
 
 
-eat_db.db.load_dummy_data(Food)
-DB = eat_db.db.get_db()
+eat_db.database.load_dummy_data(Food)
+DB = eat_db.database.get_db()
 APP = fastapi.FastAPI()
 
 
