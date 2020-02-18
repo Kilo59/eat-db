@@ -69,3 +69,6 @@ async def add_food(
         "expires": food.expire_date,
         "labels": food.labels,
     }
+
+
+APP.add_event_handler("shutdown", eat_db.database.mongo.close_connection())
