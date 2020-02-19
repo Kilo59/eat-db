@@ -3,6 +3,7 @@ eat_db.database.mongo.py
 ~~~~~~~~~~~~~~~~~~~~~~~~
 """
 import logging
+
 import pymongo.mongo_client
 
 LOGGER = logging.getLogger("mongo")

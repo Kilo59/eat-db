@@ -4,6 +4,7 @@ eat_db.database
 """
 import logging
 
+# project
 from eat_db.database import mongo
 
 __all__ = ["get_db", "load_dummy_data", "mongo"]

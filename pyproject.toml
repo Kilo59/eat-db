@@ -1,10 +1,15 @@
 [tool.isort]
 line_length = 88
+known_third_party = "invoke,pkg_resources"
 known_first_party = "eat_db"
 import_heading_firstparty = "project"
 atomic = "True"
 sections = "FUTURE,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
 verbose = "False"
+multi_line_output = 3
+include_trailing_comma = "True"
+force_grid_wrap = 0
+use_parentheses = "True"
 
 [tool.poetry]
 name = "eat-db"

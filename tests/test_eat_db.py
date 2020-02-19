@@ -12,7 +12,7 @@ from starlette.testclient import TestClient
 
 # project
 import eat_db.api.main
-from eat_db import Food, Labels, __version__, db
+from eat_db import Food, db
 
 TEST_LOGGER = logging.getLogger("tests")
 TEST_LOGGER.setLevel(logging.DEBUG)
@@ -33,10 +33,6 @@ def test_db():
     yield test_db
     db.load_dummy_data(Food)
     assert len(test_db["fridge"]) == initial_fridge_size
-
-
-def test_version():
-    assert __version__ == "0.0.1"
 
 
 def test_liveness(api_client):
