@@ -2,6 +2,7 @@
 eat_db.database.mongo.py
 ~~~~~~~~~~~~~~~~~~~~~~~~
 """
+import os
 import logging
 
 import pymongo.mongo_client
@@ -10,14 +11,12 @@ LOGGER = logging.getLogger("mongo")
 MONGO_GLOBALS = {}
 
 
-def get_mongo_client(
-    host: str = None, port: int = None, check: bool = False, **mongo_conn_kwargs
-):
+def get_mongo_client(host: str = None, check: bool = False, **mongo_conn_kwargs):
     client = MONGO_GLOBALS.get("client")
     if not client:
-        client = pymongo.mongo_client.MongoClient(
-            host=host, port=port, **mongo_conn_kwargs
-        )
+        if not host:
+            host = os.getenv("MONGODB_URI", "mongodb://localhost:27017/")
+        client = pymongo.mongo_client.MongoClient(host=host, **mongo_conn_kwargs)
         LOGGER.debug("loading mongo `client` global")
         MONGO_GLOBALS["client"] = client
     if check:
