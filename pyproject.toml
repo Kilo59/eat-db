@@ -22,15 +22,19 @@ email-validator = "*"
 fastapi = "^0.47.1"
 isort = "^4.3.21"
 pymongo = {version = "^3.10.1", extras = ["tls"]}
-python = "^3.7"
+python = "^3.8"
 
 [tool.poetry.dev-dependencies]
 black = "19.10b0"
 blue-chip = "^0.0.7"
 mongomock = "*"
-pytest = "^5.2"
+pytest = "^6.0"
 requests = "*"
 uvicorn = "*"
+
+[tool.pytest]
+addopts = "-rEfs"
+log_cli_level = "INFO"
 
 [build-system]
 build-backend = "poetry.masonry.api"
