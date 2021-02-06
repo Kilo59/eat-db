@@ -4,46 +4,23 @@ eat_db.models.py
 """
 # stdlib
 import datetime as dt
-import enum
 from typing import List, Set
 
-import pydantic
+from pydantic import BaseModel, Field, PositiveInt
 
 DB = {}
 EXPIRE_DEFAULT = dt.timedelta(weeks=4)
 
 
-class Labels(str, enum.Enum):
-    leftovers = "leftovers"
-    food = "food"
-    drink = "drink"
-
-
-class Food(pydantic.BaseModel):
+class Item(BaseModel):
     name: str
-    storage_date: dt.date = dt.date.today()
-    # TODO: use Labels to determine expire date if none provided.
-    expire_date: dt.date = storage_date + EXPIRE_DEFAULT
-    labels: Set[Labels] = set()
-
-    class Config:
-        use_enum_values = True
-        anystr_strip_whitespace = True
-
-
-class BinTypes(str, enum.Enum):
-    fridge = "fridge"
-    freezer = "freezer"
-    pantry = "pantry"
-    extra_freezer = "extra-freezer"
-
-
-class Bin(pydantic.BaseModel):
-    name: str
-    bin_type: BinTypes
+    qty: PositiveInt = Field(default=1, title="Quantity")
     description: str = None
+    storage_date: dt.date = None
+    expire_date: dt.date = None
+    labels: Set[str] = Field(default_factory=set, max_items=15)
+    notes: List[str] = Field(default_factory=list, max_items=100)
 
-    @pydantic.validator("name")
-    def unique_name(cls, v):
-        if v in DB:
-            raise ValueError(f"name must be unique, {v} already exists.")
+
+if __name__ == "__main__":
+    pass
