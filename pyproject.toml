@@ -28,7 +28,7 @@ python = "^3.8"
 black = "19.10b0"
 blue-chip = "^0.0.7"
 mongomock = "*"
-pytest = "^6.0"
+pytest = "^6"
 requests = "*"
 uvicorn = "*"
 
