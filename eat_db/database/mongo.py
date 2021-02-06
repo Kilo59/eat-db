@@ -2,8 +2,8 @@
 eat_db.database.mongo.py
 ~~~~~~~~~~~~~~~~~~~~~~~~
 """
-import os
 import logging
+import os
 
 import pymongo.mongo_client
 

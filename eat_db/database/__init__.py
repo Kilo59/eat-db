@@ -15,6 +15,7 @@ LOGGER.setLevel(logging.DEBUG)
 DEMO_NOSQL_DB = {
     "fridge": [],
     "freezer": [],
+    "items": [],
 }
 
 
@@ -24,8 +25,8 @@ def get_db(**kwargs):
 
 
 def load_dummy_data(model):
-    DEMO_NOSQL_DB["fridge"] = [
-        model(name=name, labels={"food"})
+    DEMO_NOSQL_DB["items"] = [
+        model(name=name, tags={"food"})
         for name in [
             "spam",
             "bacon",

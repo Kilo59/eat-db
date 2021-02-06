@@ -3,6 +3,11 @@ eat-db
 ~~~~~~
 Tell me what I can eat.
 """
-from .models import Food, Labels
+import logging
 
-__all__ = ["api", "database", "Food", "Labels"]
+from .models import Item
+
+logging.basicConfig()
+
+
+__all__ = ["api", "database", "Item"]
